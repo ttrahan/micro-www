@@ -3,7 +3,7 @@
 This is the front-end of a simple 2-tier app to demonstrate using Google Container Registry
 and Google Container Engine with Shippable. To see the full functionality
 of the app, use the same steps to deploy the back-end of the app which is also
-on Aye0Aye called [micro-www](https://github.com/aye0aye/micro-www).
+on Aye0Aye called [micro-api](https://github.com/aye0aye/micro-api/tree/google-gcr-gke).
 
 #### Prerequisites for running this sample:
 1. Create a project called 'shippable-gke' within Google Cloud Platform
