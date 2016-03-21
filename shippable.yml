@@ -21,7 +21,7 @@ build:
     image_tag: latest
     pull: false
     options: --privileged=true
-  post_ci:
+  push:
     - docker tag -f $REGISTRY_ACCOUNT/$APPLICATION/$SERVICE:latest $REGISTRY_ACCOUNT/$APPLICATION/$SERVICE:$BRANCH.$BUILD_NUMBER
     - docker push $REGISTRY_ACCOUNT/$APPLICATION/$SERVICE:$BRANCH.$BUILD_NUMBER
 
