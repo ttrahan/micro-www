@@ -10,7 +10,7 @@ env:
     - XUNIT_FILE=./shippable/testresults/result.xml
     - APPLICATION=aye0aye
     - SERVICE=micro-www-beta
-    - REGISTRY_ACCOUNT=288971733297.dkr.ecr.us-east-1.amazonaws.com # image registry account name/location
+    - REGISTRY_ACCOUNT=ttrahan # image registry account name/location
 
 build:
   pre_ci:
@@ -22,13 +22,15 @@ build:
     pull: false
     options: --privileged=true
   push:
-    - docker tag -f $REGISTRY_ACCOUNT/$APPLICATION/$SERVICE:latest $REGISTRY_ACCOUNT/$APPLICATION/$SERVICE:$BRANCH.$BUILD_NUMBER
-    - docker push $REGISTRY_ACCOUNT/$APPLICATION/$SERVICE:$BRANCH.$BUILD_NUMBER
+    - docker tag -f $REGISTRY_ACCOUNT/$APPLICATION/$SERVICE:latest $REGISTRY_ACCOUNT/$SERVICE:$BRANCH.$BUILD_NUMBER
+    - docker push $REGISTRY_ACCOUNT/$SERVICE:$BRANCH.$BUILD_NUMBER
 
 integrations:
     hub:
-      - integrationName: "Amazon ECR - ttrahan"
+      - integrationName: "Amazon ECR"
         type: ecr
+      - integrationName: "DockerHub-tomtra"
+        type: docker
     notifications:
       - integrationName: slack
         type: slack
