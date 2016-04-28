@@ -30,7 +30,8 @@ app.get('/env',
     res.status(200).json({
       'API_URL': process.env.API_URL,
       'LOG_LEVEL': process.env.LOG_LEVEL,
-      'SHUD_LOG_TO_FILE': process.env.SHUD_LOG_TO_FILE
+      'SHUD_LOG_TO_FILE': process.env.SHUD_LOG_TO_FILE,
+      'NODE_ENV': process.env.NODE_ENV
     });
   }
 );
