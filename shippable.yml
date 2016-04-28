@@ -29,11 +29,11 @@ integrations:
     hub:
       - integrationName: "Amazon ECR - ttrahan"
         type: ecr
-    notifications:
-      - integrationName: slack
-        type: slack
-        recipients:
-          - "#demo"
-        on_start : never
-        on_success: always
-        on_failure: always
+    # notifications:
+    #   - integrationName: slack
+    #     type: slack
+    #     recipients:
+    #       - "#demo"
+    #     on_start : never
+    #     on_success: always
+    #     on_failure: always
