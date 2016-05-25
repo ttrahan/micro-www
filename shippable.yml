@@ -10,25 +10,33 @@ env:
     - XUNIT_FILE=./shippable/testresults/result.xml
     - APPLICATION=aye0aye
     - SERVICE=micro-www-beta
-    - REGISTRY_ACCOUNT=288971733297.dkr.ecr.us-east-1.amazonaws.com # image registry account name/location
+    - REGISTRY_ACCOUNT_1=288971733297.dkr.ecr.us-east-1.amazonaws.com # image registry account name/location
+    - REGISTRY_ACCOUNT_2=ttrahan
+    - REGISTRY_ACCOUNT_3=gcr.io/shippable-gke
 
 build:
   pre_ci:
-    - docker build -t $REGISTRY_ACCOUNT/$APPLICATION/$SERVICE:latest .
+    - if [[ $IS_GIT_TAG == true ]] || [[ $IS_RELEASE == true ]]; then IS_COMMIT=false && ./build_tag_release.sh; fi
+    - ./build_commit.sh
     - node --version
   pre_ci_boot:
-    image_name: $REGISTRY_ACCOUNT/$APPLICATION/$SERVICE
+    image_name: $REGISTRY_ACCOUNT_1/$APPLICATION/$SERVICE
     image_tag: latest
     pull: false
     options: --privileged=true
   push:
-    - docker tag -f $REGISTRY_ACCOUNT/$APPLICATION/$SERVICE:latest $REGISTRY_ACCOUNT/$APPLICATION/$SERVICE:$BRANCH.$BUILD_NUMBER
-    - docker push $REGISTRY_ACCOUNT/$APPLICATION/$SERVICE:$BRANCH.$BUILD_NUMBER
+    - if [[ $IS_COMMIT != false ]]; then ./push_commit.sh; fi
 
 integrations:
     hub:
       - integrationName: "Amazon ECR - ttrahan"
         type: ecr
+      - integrationName: "GCR-shippable-gke"
+        type: gcr
+        agent_only: false
+      - integrationName: "Docker Hub"
+        type: docker
+        agent_only: false
     # notifications:
     #   - integrationName: slack
     #     type: slack
