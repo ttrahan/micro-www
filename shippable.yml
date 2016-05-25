@@ -24,7 +24,7 @@ build:
     image_tag: latest
     pull: false
     options: --privileged=true
-  push:
+  ci:
     - if [[ $IS_COMMIT != false ]]; then ./push_commit.sh; fi
 
 integrations:
